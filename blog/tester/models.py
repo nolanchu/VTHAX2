@@ -7,7 +7,8 @@ from django.db import models
 #     alcohol_per_week = models.PositiveIntegerField()  # e.g., in units
 #     sitting_duration_per_day = models.DurationField()
 
-from django.db import models
+class MyModel(models.Model):
+    data = models.JSONField()
 
 class PersonInfo(models.Model):
     AGE_CHOICES = [(i, str(i)) for i in range(1, 121)]

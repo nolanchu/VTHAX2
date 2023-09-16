@@ -92,7 +92,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 from .forms import PersonInfoForm, HealthInfoForm, MiscInfoForm
-from .models import PersonInfo, HealthInfo, MiscInfo
+from .models import PersonInfo, HealthInfo, MiscInfo, MyModel
 
 from django.core.serializers import serialize, deserialize
 
@@ -129,13 +129,12 @@ def last_in_gen(gen):
     for obj in gen:
         data = obj.object
     return data
+import json
 def finished(request):
-    person_info = last_in_gen(deserialize('json', request.session.get('person_info')))
-    health_info = last_in_gen(deserialize('json', request.session.get('health_info')))
-    misc_info = last_in_gen(deserialize('json', request.session.get('misc_info')))
-    print(person_info.__dict__, "a")
-    print(health_info, "b")
-    print(misc_info, "c")
-    # for obj in deserialize('json', serialized_data):
-        # person_info = obj.object
+    all_fields = {}
+    for string in ['person_info', 'health_info', 'misc_info']:
+        all_fields.update(json.loads(request.session.get(string))[0]['fields'])
+    m = MyModel(data=all_fields)
+    m.save()
+    # print(all_fields)
     return render(request, 'finished.html')
