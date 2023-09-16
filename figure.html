@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resizable Stick Figure</title>
+</head>
+<body>
+<canvas id="canvas" width="400" height="400"></canvas>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let isDragging = false;
+    let startY;
+    let initialHeight = 100;
+    let currentHeight = initialHeight;
+
+    function drawStickFigure(height) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const headRadius = 20;
+        const torsoHeight = height * 0.5;
+        const armHeight = height * 0.25;
+        const legHeight = height - (torsoHeight + headRadius * 2);
+
+        // Head
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2, headRadius + 10, headRadius, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Torso
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2, headRadius * 2 + 10);
+        ctx.lineTo(canvas.width / 2, headRadius * 2 + 10 + torsoHeight);
+        ctx.stroke();
+
+        // Arms
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2 - headRadius, headRadius * 2 + 10 + armHeight);
+        ctx.lineTo(canvas.width / 2 + headRadius, headRadius * 2 + 10 + armHeight);
+        ctx.stroke();
+
+        // Legs
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2, headRadius * 2 + 10 + torsoHeight);
+        ctx.lineTo(canvas.width / 2 - headRadius, headRadius * 2 + 10 + torsoHeight + legHeight);
+        ctx.moveTo(canvas.width / 2, headRadius * 2 + 10 + torsoHeight);
+        ctx.lineTo(canvas.width / 2 + headRadius, headRadius * 2 + 10 + torsoHeight + legHeight);
+        ctx.stroke();
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startY = e.clientY;
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        let dy = e.clientY - startY;
+        currentHeight = Math.max(50, initialHeight + dy); // 50 is the minimum height
+        drawStickFigure(currentHeight);
+    });
+
+    canvas.addEventListener('mouseup', () => {
+        isDragging = false;
+        initialHeight = currentHeight;
+    });
+
+    // Initial drawing
+    drawStickFigure(initialHeight);
+
+</script>
+</body>
+</html>
