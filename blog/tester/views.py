@@ -21,7 +21,7 @@ class DisplayRecordsView(TemplateView):
         context = super().get_context_data(**kwargs)
         # Get latest survey
         latest_survey = MyModel.objects.latest('id')
-
+        print(latest_survey.data)
         percentiles = {}
         for attribute in latest_survey.data:
             percentiles[attribute] = calculate_percentile(MyModel.objects.exclude(id=latest_survey.id), attribute, latest_survey)
@@ -37,27 +37,16 @@ from .models import PersonInfo, MiscInfo, MyModel
 from django.core.serializers import serialize, deserialize
 
 models = ['PersonInfo', "ConsumptionInfo", 'PhysicalActivityInfo', 'BiologicalInfo', 'MentalHealth', 'MiscInfo']
-# forms = ['PersonInfo', "ConsumptionInfo", 'PhysicalActivityInfo', 'BiologicalInfo', 'MentalHealth', 'MiscInfo']
 from .forms import *
 def step(request, step_num):
+    step_num = int(step_num)
     form = eval(f"{models[step_num]}Form")(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
             serialized_data = serialize('json', [form.instance])
             request.session[models[step_num]] = serialized_data
-            return HttpResponseRedirect(reverse(f'step{step_num+1}'))
+            return HttpResponseRedirect(f'{step_num+1}')
     return render(request, f'step{step_num}.html', {'form': form})
-def step3(request):
-    form = MiscInfoForm(request.POST or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            serialized_data = serialize('json', [form.instance])
-            request.session['misc_info'] = serialized_data
-            return HttpResponseRedirect(reverse('finished'))
-            
-            # request.session.clear()
-            # return HttpResponseRedirect(reverse('finished'))
-    return render(request, 'step3.html', {'form': form})
 def last_in_gen(gen):
     data = None
     for obj in gen:
@@ -66,7 +55,7 @@ def last_in_gen(gen):
 import json
 def finished(request):
     all_fields = {}
-    for string in ['person_info', 'health_info', 'misc_info']:
+    for string in models:
         all_fields.update(json.loads(request.session.get(string))[0]['fields'])
     m = MyModel(data=all_fields)
     m.save()
