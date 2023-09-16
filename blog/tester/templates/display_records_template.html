@@ -12,49 +12,32 @@
         var jsonData = loadJson('#jsonData');
         // console.log(jsonData['alcoholPercentile']);
         // console.log(jsonData);
-        console.log(jsonData.alcohol_percentile);
+        // console.log(jsonData.alcohol_percentile);
+        console.log(jsonData);
+        var labels = [];
+        var data = [];
+        for (const [key, value] of Object.entries(jsonData)) {
+            if (value != -1) {
+                labels.push(key);
+                data.push(value);
+                console.log(key, value);
+            }
+        }
+
         var chart = new Chart(ctx, {
             type: 'bar',  // Type of chart: bar chart
             data: {
-                                labels: [
-                    'Cigarettes per day',
-                    'Exercise per week',
-                    'Reaction time in ms',
-                    'Alcohol per week',
-                    'Sitting duration per day'
-                ],
+                labels: labels,
                 datasets: [{
                     label: 'Percentiles',
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 0.2)',  // Color for each bar
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 205, 86, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',   // Border color for each bar
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(255, 205, 86, 1)',
-                        'rgba(54, 162, 235, 1)'
-                    ],
                     borderWidth: 1,  // Border width
-                    data: [
-                        jsonData.cigarette_percentile,
-                        jsonData.exercise_percentile,
-                        jsonData.reaction_percentile,
-                        jsonData.alcohol_percentile,
-                        jsonData.sitting_percentile,
-
-                    ],
-                    
+                    data: data,
                 }]
             },
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true,
+                        min: 0,
                         max: 100  // Since it's percentiles
                     }
                 }
