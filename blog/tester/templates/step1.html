@@ -5,11 +5,7 @@
 <form method="post">
     {% csrf_token %}
     {{ form.non_field_errors }} 
-    <div class="fieldWrapper">
-        {{ form.age.errors }}
-        {{ form.age.label_tag }}
-        {{ form.age }}
-    </div>
+    <p align="center" id="cigs">Cigarettes: </p>
     <div class="fieldWrapper">
         {{ form.smoking.errors }}
         {{ form.smoking.label_tag }}
@@ -59,6 +55,10 @@
     </style>
     <script type="text/javascript">
     $(document).ready(function() {
+
+    let cigs = document.getElementById('cigs');
+
+
     let isDragging = false;
     let startY;
     let startHeight;
@@ -91,10 +91,6 @@
         return $(".water").height()/range*50;
     }
 
-    // Example: log the height every 5 seconds (you can modify or remove this part)
-    // setInterval(() => {
-        // console.log(getWaterHeight());
-    // }, 5000);
     const next_button = document.getElementById('next-button1');
     const hiddenInput = document.getElementById('id_water');
     
