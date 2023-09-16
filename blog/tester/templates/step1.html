@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Step 1: Personal Information</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form }}  <!-- This will render the form fields styled for Bootstrap -->
+    <button type="submit" class="btn btn-primary">Next</button>
+</form>
+{% endblock %}

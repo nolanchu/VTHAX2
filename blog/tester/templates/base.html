@@ -2,39 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Default Title{% endblock %}</title>
-    {# You can add CSS or JavaScript includes here if you have any. #}
-    <!-- CSS -->
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Optional JavaScript -->
-<!-- jQuery, Popper.js, and Bootstrap JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <title>Multi-Step Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<div id="header">
-    <h1>My Django Project</h1>
-    <nav>
-        <ul>
-            <li><a href="{% url 'health_survey' %}">Health Survey</a></li>
-            {# Add more navigation links as necessary #}
-        </ul>
-    </nav>
+<div class="container mt-5">
+    {% block content %}
+    {% endblock %}
 </div>
 
-<div id="content">
-    {% block content %}{% endblock %}
-</div>
-
-<div id="footer">
-    <p>Copyright © 2023. My Django Project.</p>
-</div>
-
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
