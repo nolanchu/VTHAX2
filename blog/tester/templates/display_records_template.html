@@ -1,0 +1,100 @@
+{% load static %}
+<div style="display: none" id="jsonData" data-json="{{ data }}"></div>
+<canvas id="percentileChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<script>
+    // This runs once the page is loaded
+    function loadJson(selector) {
+    return JSON.parse(document.querySelector(selector).getAttribute('data-json'));
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        var ctx = document.getElementById('percentileChart').getContext('2d');
+        var jsonData = loadJson('#jsonData');
+        // console.log(jsonData['alcoholPercentile']);
+        // console.log(jsonData);
+        console.log(jsonData.alcohol_percentile);
+        var chart = new Chart(ctx, {
+            type: 'bar',  // Type of chart: bar chart
+            data: {
+                                labels: [
+                    'Cigarettes per day',
+                    'Exercise per week',
+                    'Reaction time in ms',
+                    'Alcohol per week',
+                    'Sitting duration per day'
+                ],
+                datasets: [{
+                    label: 'Percentiles',
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',  // Color for each bar
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',   // Border color for each bar
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 205, 86, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1,  // Border width
+                    data: [
+                        jsonData.cigarette_percentile,
+                        jsonData.exercise_percentile,
+                        jsonData.reaction_percentile,
+                        jsonData.alcohol_percentile,
+                        jsonData.sitting_percentile,
+
+                    ],
+                    
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100  // Since it's percentiles
+                    }
+                }
+            }
+        });
+    });
+</script>
+<!-- <script>
+
+    function loadJson(selector) {
+        console.log(document.querySelector(selector).getAttribute('data-json'));
+        return JSON.parse(document.querySelector(selector).getAttribute('data-json'));
+    }
+
+
+    window.onload = function () {
+        var jsonData = loadJson('#jsonData');
+        var data = jsonData.map((item) => item.value);
+        var labels = jsonData.map((item) => item.date);
+    
+      var config = {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'A random dataset',
+              backgroundColor: 'black',
+              borderColor: 'lightblue',
+              data: data,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true
+        }
+      };
+    
+      var ctx = document.getElementById('chart').getContext('2d');
+      window.myLine = new Chart(ctx, config);
+    };
+    </script> -->

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Default Title{% endblock %}</title>
+    {# You can add CSS or JavaScript includes here if you have any. #}
+</head>
+<body>
+
+<div id="header">
+    <h1>My Django Project</h1>
+    <nav>
+        <ul>
+            <li><a href="{% url 'test_sql' %}">Test SQL</a></li>
+            {# Add more navigation links as necessary #}
+        </ul>
+    </nav>
+</div>
+
+<div id="content">
+    {% block content %}{% endblock %}
+</div>
+
+<div id="footer">
+    <p>Copyright © 2023. My Django Project.</p>
+</div>
+
+</body>
+</html>
