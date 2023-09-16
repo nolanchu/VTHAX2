@@ -1,37 +1,47 @@
 from django.db import models
 
-# class HealthSurvey(models.Model):
-#     cigarettes_per_day = models.PositiveIntegerField()
-#     exercise_per_week = models.DurationField()  # Saved as timedelta, e.g., 3 hours 30 minutes
-#     reaction_time_ms = models.PositiveIntegerField()
-#     alcohol_per_week = models.PositiveIntegerField()  # e.g., in units
-#     sitting_duration_per_day = models.DurationField()
-
 class MyModel(models.Model):
     data = models.JSONField()
 
 class PersonInfo(models.Model):
     AGE_CHOICES = [(i, str(i)) for i in range(1, 121)]
     SEX_CHOICES = [('M', 'Male'), ('F', 'Female')]
-    
     age = models.PositiveSmallIntegerField(choices=AGE_CHOICES)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES)
+
+class ConsumptionInfo(models.Model):
+    smoking = models.PositiveSmallIntegerField()
+    alcohol = models.PositiveSmallIntegerField()
+    DIET_CHOICES = [('V', 'Vegetarian'), ('NV', 'Non-Vegetarian')]
+    diet = models.CharField(max_length=2, choices=DIET_CHOICES)
+    water = models.PositiveSmallIntegerField()
+
     bmi = models.DecimalField(max_digits=5, decimal_places=2)
     smoking = models.BooleanField()
     alcohol = models.BooleanField()
 
-class HealthInfo(models.Model):
-    DIET_CHOICES = [('V', 'Vegetarian'), ('NV', 'Non-Vegetarian')]
-    SLEEP_CHOICES = [(i, str(i)) for i in range(1, 25)]
-    
-    diet = models.CharField(max_length=2, choices=DIET_CHOICES)
-    water_intake = models.PositiveSmallIntegerField()  # in litres
-    physical_activity = models.PositiveSmallIntegerField()  # hours per week
-    sleep = models.PositiveSmallIntegerField(choices=SLEEP_CHOICES)
+class PhysicalActivityInfo(models.Model):
+    exercise = models.PositiveSmallIntegerField() # hours 
+    desk = models.PositiveSmallIntegerField() # hours at
+    MY_CHOICES = (
+        ('a', 'Human-powered transport'),
+        ('b', 'Motorized transport'),
+    )
+    transportation = models.CharField(max_length=1, choices=MY_CHOICES)
+
+class BiologicalInfo(models.Model):
+    height = models.DecimalField(max_digits=5, decimal_places=2)
+    weight = models.DecimalField(max_digits=5, decimal_places=2)
+    sleep = models.PositiveSmallIntegerField()
+    sunscreen = models.BooleanField()
+
+class MentalHealthInfo(models.Model):
+    friends = models.PositiveSmallIntegerField()  # num of close friends
+    STRESS_CHOICES = [(i, str(i)) for i in range(1, 11)]
+    stress = models.PositiveSmallIntegerField(choices=STRESS_CHOICES)
 
 class MiscInfo(models.Model):
     EDUCATION_CHOICES = [('HS', 'High School'), ('UG', 'Undergraduate'), ('PG', 'Postgraduate')]
-    
     driving_safety = models.BooleanField()
     location_crime_rate = models.BooleanField()  # True for High, False for Low
     education_level = models.CharField(max_length=2, choices=EDUCATION_CHOICES)

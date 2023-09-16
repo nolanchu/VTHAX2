@@ -9,9 +9,7 @@ from . import views
 
 urlpatterns = [
     path('display/', views.DisplayRecordsView.as_view()),
-    path('step1/', views.step1, name='step1'),
-    path('step2/', views.step2, name='step2'),
-    path('step3/', views.step3, name='step3'),
+    path('step/<str:step_num>', views.step),
     path('finished/', views.finished, name='finished'),  # You'll need to create this view
 ]
 
