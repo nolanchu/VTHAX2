@@ -14,11 +14,7 @@ class ConsumptionInfo(models.Model):
     alcohol = models.PositiveSmallIntegerField()
     DIET_CHOICES = [('V', 'Vegetarian'), ('NV', 'Non-Vegetarian')]
     diet = models.CharField(max_length=2, choices=DIET_CHOICES)
-    water = models.PositiveSmallIntegerField()
-
-    bmi = models.DecimalField(max_digits=5, decimal_places=2)
-    smoking = models.BooleanField()
-    alcohol = models.BooleanField()
+    water = models.DecimalField(max_digits=5, decimal_places=2)
 
 class PhysicalActivityInfo(models.Model):
     exercise = models.PositiveSmallIntegerField() # hours 

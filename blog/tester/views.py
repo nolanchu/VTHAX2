@@ -46,6 +46,9 @@ def step(request, step_num):
             serialized_data = serialize('json', [form.instance])
             request.session[models[step_num]] = serialized_data
             return HttpResponseRedirect(f'{step_num+1}')
+        else:
+            print(form.errors)
+            print("nogood")
     return render(request, f'step{step_num}.html', {'form': form})
 def last_in_gen(gen):
     data = None
