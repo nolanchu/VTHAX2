@@ -5,9 +5,9 @@ class MyModel(models.Model):
 # from django.core.validators import MaxValueValidator
 class PersonInfo(models.Model):
     AGE_CHOICES = [(i, str(i)) for i in range(1, 121)]
-    SEX_CHOICES = [('M', 'Male'), ('F', 'Female'), ('O', 'Other')]
+    SEX_CHOICES = [(1, 'Male'), (2, 'Female'), (3, 'Other')]
     age = models.PositiveSmallIntegerField(choices=AGE_CHOICES)
-    sex = models.CharField(max_length=1, choices=SEX_CHOICES)
+    sex = models.PositiveSmallIntegerField(choices=SEX_CHOICES)
 
 class ConsumptionInfo(models.Model):
     smoking = models.PositiveSmallIntegerField()

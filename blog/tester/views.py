@@ -24,7 +24,9 @@ class DisplayRecordsView(TemplateView):
         print(latest_survey.data)
         percentiles = {}
         for attribute in latest_survey.data:
-            percentiles[attribute] = calculate_percentile(MyModel.objects.exclude(id=latest_survey.id), attribute, latest_survey)
+            # print(attribute)
+            percentiles[f"{attribute}_percentile"] = calculate_percentile(MyModel.objects.exclude(id=latest_survey.id), attribute, latest_survey)
+            percentiles[attribute] = latest_survey.data[attribute]
 
         context['data'] = json.dumps(percentiles)
         return context
@@ -50,6 +52,7 @@ def step(request, step_num):
             print(form.errors)
             print("nogood")
     return render(request, f'step{step_num}.html', {'form': form})
+
 def last_in_gen(gen):
     data = None
     for obj in gen:
