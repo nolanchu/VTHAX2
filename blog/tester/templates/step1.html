@@ -6,30 +6,24 @@
 <img hidden id="smoker" data-src="{% static 'tester/smoker.jpg' %}">
 <img hidden id="cig" data-src="{% static 'tester/cig.png' %}">
 <img hidden id="cig_end" data-src="{% static 'tester/cig_end.png' %}">
-
 <img hidden id="burger" data-src="{% static 'tester/burger.png' %}">
 <img hidden id="meat" data-src="{% static 'tester/meat.png' %}">
 <img hidden id="top_bun" data-src="{% static 'tester/top_bun.png' %}">
 <form method="post">
     {% csrf_token %}
     {{ form.non_field_errors }} 
+    <canvas id="myCanvas" width="400" height="400"></canvas>
     <div class="fieldWrapper">
         {{ form.smoking.errors }}
         {{ form.smoking.label_tag }}
         {{ form.smoking }}
     </div>
-    <canvas id="myCanvas" width="400" height="400"></canvas>
-    <div class="fieldWrapper">
-        {{ form.alcohol.errors }}
-        {{ form.alcohol.label_tag }}
-        {{ form.alcohol }}
-    </div>
+    <canvas id="burgerCanvas" width="400" height="400"></canvas>
     <div class="fieldWrapper">
         {{ form.diet.errors }}
         {{ form.diet.label_tag }}
         {{ form.diet }}
     </div>
-    <canvas id="burgerCanvas" width="400" height="400"></canvas>
     <div class="fieldWrapper">
         {{ form.water.errors }}
         {{ form.water.label_tag }}
@@ -39,7 +33,13 @@
     <div class="glass">
         <div class="water"></div>
     </div>
+    <div class="fieldWrapper">
+        {{ form.alcohol.errors }}
+        {{ form.alcohol.label_tag }}
+        {{ form.alcohol }}
+    </div>
     <button id="next-button1" type="submit" class="btn btn-primary">Next</button>
+
 </form>
     <style>
 .glass {
@@ -64,28 +64,27 @@
     <script type="text/javascript">
     $(document).ready(function() {
         const canvas = document.getElementById('myCanvas');
-const ctx = canvas.getContext('2d');
-    let cigs = document.getElementById('cigs');
-
-    var imG = document.getElementById('burger');
-    imG.src = imG.getAttribute('data-src');
+        const ctx = canvas.getContext('2d');
+        const burger_canvas = document.getElementById('burgerCanvas');
+        const ctx2 = burger_canvas.getContext('2d');
+    var imG1 = document.getElementById('burger');
+    imG1.src = imG1.getAttribute('data-src');
     
     var imG2 = document.getElementById('meat');
     imG2.src = imG2.getAttribute('data-src');
     
     var imG3 = document.getElementById('top_bun');
     imG3.src = imG3.getAttribute('data-src');
-    imG1.src = 'burger.png';
-    imG2.src = 'meat.png';
-    imG3.src = 'top_bun.png';
+
     function draw_burger(patties=1) {
-        ctx.drawImage(img1, canvas.width/2, canvas.height-150, img1.width*.2, img1.height*.2);
+        reset2();
+        ctx2.drawImage(imG1, burger_canvas.width/2, burger_canvas.height-150, imG1.width*.2, imG1.height*.2);
         for (var i=1; i<patties; ++i) {
-            ctx.drawImage(img2, canvas.width/2, canvas.height-150-50*i, img2.width*.2, img2.height*.2);
-            ctx.drawImage(img3, canvas.width/2+8, canvas.height-138-50*i, img3.width*.2, img3.height*.2);
+            ctx2.drawImage(imG2, burger_canvas.width/2, burger_canvas.height-150-50*i, imG2.width*.2, imG2.height*.2);
+            ctx2.drawImage(imG3, burger_canvas.width/2+8, burger_canvas.height-138-50*i, imG3.width*.2, imG3.height*.2);
         }
     }
-    img1.onload = function() {
+    imG1.onload = function() {
         draw_burger();
     }
 
@@ -97,12 +96,17 @@ const ctx = canvas.getContext('2d');
     
     var img3 = document.getElementById('cig_end');
     img3.src = img3.getAttribute('data-src');
+
     img.onload = function() {
         ctx.drawImage(img, canvas.width/2-30, canvas.height/2-120, img.width/4, img.height/4); // Draws the image at position (0, 0) on the canvas
     };
 function reset() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+function reset2() {
+    ctx2.fillStyle = "white";
+    ctx2.fillRect(0, 0, canvas.width, canvas.height);
 }
 function draw_cig(length=1) {
     reset();
@@ -158,11 +162,15 @@ function draw_cig(length=1) {
         hiddenInput.value = getWaterHeight().toPrecision(2);
     });
 
+    const burger_count = document.getElementById('id_diet');
+    burger_count.addEventListener('click', function() {
+        draw_burger(burger_count.value || 0);
+    });
+
     const smoking_count = document.getElementById('id_smoking');
     smoking_count.addEventListener('click', function() {
         // console.log(smoking_count.value);
         draw_cig(smoking_count.value || 0);
-        hiddenInput.value = getWaterHeight().toPrecision(2);
     });
 
 });
