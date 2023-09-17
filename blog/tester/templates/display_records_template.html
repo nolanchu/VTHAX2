@@ -22,7 +22,10 @@
 {% load static %}
 <div style="display: none" id="jsonData" data-json="{{ data }}"></div>
 <canvas id="percentileChart"></canvas>
+<div id="container"></div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/sunburst.js"></script>
 <script>
     const non_percentile = ['sex', 'transportation', 'location_crime_rate'];
   const attributeDescriptions = {
@@ -384,6 +387,63 @@ for (var attribute of attributes) {
   const maxDiff = Math.max(...stepDifferences);
   const maxDiffSource = stepDifferences.indexOf(maxDiff); // maxDiffSource is the step that yields the maxDiff
   const minDiff = Math.min(...stepDifferences);
+
+  var diff_map = {};
+  for (var i=0; i<stepDifferences.length; ++i) {
+    diff_map[attributes[i]] = stepDifferences[i];
+  }
+  var positives = {};
+  var negatives = {};
+  var total_pos_mag = 0;
+  var total_neg_mag = 0;
+    for (const [key, value] of Object.entries(diff_map)) {
+        if (value > 0) {
+          positives[key] = value;
+          total_pos_mag += value;
+        } else if (value < 0) {
+          negatives[key] = -value;
+          total_neg_mag -= value;
+        }
+    }
+    // console.log(total_pos_mag);
+    // console.log(total_neg_mag);
+    // console.log(diff_map);
+    for (const [key, value] of Object.entries(diff_map)) {
+        if (value > 0) {
+
+          positives[key]/=total_pos_mag;
+          positives[key]*=100;
+        } else if (value < 0) {
+          negatives[key]/=total_neg_mag;
+          negatives[key]*=100;
+        }
+    }
+    // console.log(positives);
+
+
+
+  // 0th index of step differences is smoking (can be non-zero)
+//   const attributes = [
+//   "smoking",
+//   "alcohol",
+//   "diet",
+//   "water",
+//   "exercise",
+//   "desk",
+//   "transportation",
+//   "height",// bmi
+//   // "weight",
+//   "sleep",
+//   // sunscreen
+//   "sleep", // filler for sunscreen
+//   "friends",
+//   "stress",
+//   "driving_safety",
+//   "location_crime_rate",
+//   "education_level"
+// ]
+ 
+
   const minDiffSource = stepDifferences.indexOf(minDiff);
 var results = `You are expected to live until ${(startingValue15+age).toPrecision(2)} years old.<br>`
   results += `The average person your age and sex is expected to live until ${(startingValue0+age).toPrecision(2)} years.<br>`
@@ -414,8 +474,265 @@ function updateTimer() {
         clearInterval(countdownInterval);
         document.getElementById("timer").innerHTML = "EXPIRED";
     }
+
+
 }
 
 let countdownInterval = setInterval(updateTimer, 1000); 
+
+//   const attributes = [
+//   "smoking",
+//   "alcohol",
+//   "diet",
+//   "water",
+//   "exercise",
+//   "desk",
+//   "transportation",
+//   "height",// bmi
+//   // "weight",
+//   "sleep",
+//   // sunscreen
+//   "sleep", // filler for sunscreen
+//   "friends",
+//   "stress",
+//   "driving_safety",
+//   "location_crime_rate",
+//   "education_level"
+// ]
+
+var data = [{
+                id: '0.0',
+            parent: '',
+            name: 'Factors',
+            },
+            {
+                id: '1.0',
+            parent: '0.0',
+            name: 'Consumption',
+            attr: 'consumption',
+            value: 20,
+            },
+            {
+                id: '1.1',
+            parent: '1.0',
+            name: 'Smoking',
+            attr: 'smoking',
+            value: 5,
+                },
+            {
+                id: '1.2',
+            parent: '1.0',
+            name: 'Alcohol',
+            attr: 'alcohol',
+            value: 5,
+                },
+
+            {
+                id: '1.3',
+            parent: '1.0',
+            name: 'Diet',
+            attr: 'diet',
+            value: 5,
+                },
+
+            {
+                id: '1.4',
+            parent: '1.0',
+            name: 'Water',
+            attr: 'water',
+            value: 5,
+                },
+            {
+                id: '2.0',
+            parent: '0.0',
+            name: 'Physical Activity',
+            attr: 'physical_activity',
+            value: 20,
+            },
+            {
+                id: '2.1',
+            parent: '2.0',
+            name: 'Exercise',
+            attr: 'exercise',
+            value: 6.7,
+                },
+            {
+                id: '2.2',
+            parent: '2.0',
+            name: 'Sitting',
+            attr: 'desk',
+            value: 6.7,
+                },
+
+            {
+                id: '2.3',
+            parent: '2.0',
+            name: 'Transportation',
+            attr: 'transportation',
+            value: 6.7,
+                },
+            {
+                id: '3.0',
+            parent: '0.0',
+            name: 'Bio',
+            attr: 'bio',
+            value: 20,
+            },
+            {
+                id: '3.2',
+            parent: '3.0',
+            name: 'Sleep',
+            attr: 'sleep',
+            value: 6.7,
+                },
+
+              {
+                id: '4.0',
+            parent: '0.0',
+            name: 'Mental Health',
+            attr: 'mental_health',
+            value: 20,
+            },
+            {
+                id: '4.1',
+            parent: '4.0',
+            name: 'Close Friends',
+            attr: 'friends',
+            value: 10,
+                },
+            {
+                id: '4.2',
+            parent: '4.0',
+            name: 'Stress',
+            attr: 'stress',
+            value: 10,
+                },
+            {
+                id: '5.0',
+            parent: '0.0',
+            name: 'Miscellaneous',
+            attr: 'misc',
+            value: 20
+            },
+            {
+                id: '5.1',
+            parent: '5.0',
+            name: 'Driving',
+            attr: 'driving_safety',
+            value: 6.7,
+                },
+            {
+                id: '5.2',
+            parent: '5.0',
+            name: 'Crime Rate',
+            attr: 'location_crime_rate',
+            value: 6.7,
+                },
+            {
+                id: '5.3',
+            parent: '5.0',
+            name: 'Education Level',
+            attr: 'education_level',
+            value: 6.7,
+                }
+            ];
+        var big_boys = {'consumption':0,'physical_activity':0, 'bio':0, 'mental_health':0};
+        var parents = {
+          'smoking':'consumption',
+          'alcohol':'consumption',
+          'diet':'consumption',
+          'water':'consumption',
+          'exercise':'physical_activity',
+          'desk':'physical_activity',
+          'transportation':'physical_activity',
+          'sleep':'bio',
+          'friends':'mental_health',
+          'stress':'mental_health',
+          'driving_safety':'misc',
+          'location_crime_rate':'misc',
+          'education_level':'misc'
+        };
+        function find_node(attr) {
+           for (var i=1; i<data.length; ++i)  {
+              if (data[i].attr == attr) {
+                return i;
+              }
+           }
+        }
+        for (const [attr, value] of Object.entries(positives)) {
+          if (!(attr in big_boys)) {
+            // console.log(attr, parents[attr]);
+            data[find_node(attr)].value = value;
+            big_boys[parents[attr]] += value;
+          }
+        }
+        for (const [attr, value] of Object.entries(negatives)) {
+          if (!(attr in big_boys)) {
+            // console.log(attr, parents[attr]);
+            data[find_node(attr)].value = -value;
+            big_boys[parents[attr]] -= value;
+          }
+        }
+          // console.log(big_boys);
+        var pos_big_boys = {'consumption':0,'physical_activity':0, 'bio':0, 'mental_health':0, 'misc':0};
+          // console.log(positives, 'ah');
+          // console.log(negatives, 'bah');
+        for (const [attr, value] of Object.entries(big_boys)) {
+            data[find_node(attr)].value = value;
+        }
+        var pos_data = [];
+        // console.log(big_boys);
+        for (var item of data) {
+          // console.log(item, "?");
+          if (item.value > 0) {
+              // console.log(item, item.value, "?");
+              pos_data.push(item);
+              // if (item.attr in big_boys) {
+                // console.log("bug");
+              pos_big_boys[parents[item.attr]] += item.value
+              // }
+          }
+        }
+        console.log(pos_data, pos_big_boys);
+       for (const [attr, value] of Object.entries(pos_big_boys)) {
+        
+        if (value > 0) {
+          var item = JSON.parse(JSON.stringify(data[find_node(attr)]));
+          item.value = value;
+          pos_data.push(item);
+        }
+        }
+        console.log(pos_data);
+
+            const chart = Highcharts.chart('container', {
+
+                chart: {
+                height: '50%'
+                },
+
+            // Let the center circle be transparent
+            colors: ['transparent'].concat(Highcharts.getOptions().colors),
+                
+            title: {  // Set the chart title here
+                text: 'Factors That Positively Impact Your Life Expectancy'
+                },
+
+            series: [{
+                type: 'sunburst',
+            data: pos_data,
+            levels: [
+            {
+                level: 1,
+                    },
+            {
+                level: 2,
+            colorByPoint: true,
+                    },
+
+            ],
+                }],
+            });
+            console.log(chart)
+
 </script>
 {% endblock %}
