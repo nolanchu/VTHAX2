@@ -23,6 +23,7 @@
 <div style="display: none" id="jsonData" data-json="{{ data }}"></div>
 <canvas id="percentileChart"></canvas>
 <div id="container"></div>
+<div id="container2"></div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/sunburst.js"></script>
@@ -668,32 +669,49 @@ var data = [{
         }
         for (const [attr, value] of Object.entries(negatives)) {
           if (!(attr in big_boys)) {
-            // console.log(attr, parents[attr]);
             data[find_node(attr)].value = -value;
             big_boys[parents[attr]] -= value;
           }
         }
-          // console.log(big_boys);
         var pos_big_boys = {'consumption':0,'physical_activity':0, 'bio':0, 'mental_health':0, 'misc':0};
-          // console.log(positives, 'ah');
-          // console.log(negatives, 'bah');
+
+        var neg_big_boys = {'consumption':0,'physical_activity':0, 'bio':0, 'mental_health':0, 'misc':0};
+
         for (const [attr, value] of Object.entries(big_boys)) {
             data[find_node(attr)].value = value;
         }
+
         var pos_data = [];
+        var neg_data = [];
         // console.log(big_boys);
-        for (var item of data) {
-          // console.log(item, "?");
-          if (item.value > 0) {
-              // console.log(item, item.value, "?");
-              pos_data.push(item);
-              // if (item.attr in big_boys) {
-                // console.log("bug");
-              pos_big_boys[parents[item.attr]] += item.value
-              // }
+        // for (var item of data) {
+        //   if (item.value < 0) {
+        //       neg_data.push(item);
+        //       neg_big_boys[parents[item.attr]] += item.value
+        //   }
+        // }
+      for (var item of data) {
+          if (item.value < 0) {
+              // item.value *= -1;
+            var item = JSON.parse(JSON.stringify(item));
+            item.value *= -1;
+              neg_data.push(item);
+              neg_big_boys[parents[item.attr]] += item.value
           }
         }
-        console.log(pos_data, pos_big_boys);
+        for (var item of data) {
+          if (item.value > 0) {
+              pos_data.push(item);
+              pos_big_boys[parents[item.attr]] += item.value
+          }
+        }
+       for (const [attr, value] of Object.entries(neg_big_boys)) {
+      if (value < 0) {
+          var item = JSON.parse(JSON.stringify(data[find_node(attr)]));
+          item.value = -value;
+          neg_data.push(item);
+        }
+      }
        for (const [attr, value] of Object.entries(pos_big_boys)) {
         
         if (value > 0) {
@@ -702,7 +720,7 @@ var data = [{
           pos_data.push(item);
         }
         }
-        console.log(pos_data);
+        console.log(pos_data, neg_data);
 
             const chart = Highcharts.chart('container', {
 
@@ -733,6 +751,34 @@ var data = [{
                 }],
             });
             console.log(chart)
+      const chart2 = Highcharts.chart('container2', {
+
+                chart: {
+                height: '50%'
+                },
+
+            // Let the center circle be transparent
+            colors: ['transparent'].concat(Highcharts.getOptions().colors),
+                
+            title: {  // Set the chart title here
+                text: 'Factors That Negatively Impact Your Life Expectancy'
+                },
+
+            series: [{
+                type: 'sunburst',
+            data: neg_data,
+            levels: [
+            {
+                level: 1,
+                    },
+            {
+                level: 2,
+            colorByPoint: true,
+                    },
+
+            ],
+                }],
+            });
 
 </script>
 {% endblock %}
