@@ -143,8 +143,9 @@ DATABASES = {
 # /static/tester/ makes it go to /static/tester/tester/burger
 # /tester/static/ makes it go to /tester/static/tester, but now it's moved to tester/tester/static/tester
 # STATIC_URL = '/tester/static/'
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "/tester/static/")]
+STATIC_URL = 'tester/static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "/tester/static/")]# this doesn't exist
+STATICFILES_DIRS = []# this doesn't exist
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
