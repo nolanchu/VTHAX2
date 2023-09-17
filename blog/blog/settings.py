@@ -141,7 +141,9 @@ DATABASES = {
 
 # just /tester/ made it go to /tester/tester/x.png instead of tester/static/tester/x.png
 # /static/tester/ makes it go to /static/tester/tester/burger
-STATIC_URL = '/tester/static/'
+# /tester/static/ makes it go to /tester/static/tester, but now it's moved to tester/tester/static/tester
+# STATIC_URL = '/tester/static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "tester/static")]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
