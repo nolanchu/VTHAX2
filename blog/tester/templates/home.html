@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Lens Quiz</title>
+    <!-- Add Bootstrap CSS link here -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Add custom CSS if needed -->
+    <style>
+        /* Add your custom CSS styles here */
+        .header {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .start-button {
+            position: absolute;
+            top: 20px;
+            right: 50px;
+        }
+        .logo {
+            text-align: left;
+            margin-right: 20px;
+            margin-top: 20px;
+        }
+        .quiz-info {
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Start Quiz Button -->
+        <div class="start-button">
+            <a href="#" class="btn btn-primary">Start Quiz</a>
+        </div>
+        <!-- Logo -->
+        <div class="logo">
+            <img src="Magnifying-glass-1976105_640.png" alt="Life Lens Logo"
+            width = "60"
+            height = "60">
+        </div>
+        <!-- Header -->
+        <div class="header">
+            <h1>Life Lens</h1>
+        </div>
+        <!-- Quiz Information -->
+        <div class="quiz-info">
+            <p>What is the Life Lens Quiz?
+                <br>Insert details
+            </p>
+            <!-- Add your form or content here -->
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and jQuery links if needed -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+</body>
+</html>
+
+{% endblock %}

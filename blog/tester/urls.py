@@ -9,6 +9,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
+    path('', views.home),
     path('display/', views.DisplayRecordsView.as_view()),
     path('step/6', views.finished),
     path('step/<str:step_num>', views.step),

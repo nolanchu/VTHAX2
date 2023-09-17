@@ -56,6 +56,10 @@ def last_in_gen(gen):
         data = obj.object
     return data
 import json
+
+def home(request):
+    return render(request, 'home.html')
+
 def finished(request):
     all_fields = {}
     for string in models:
