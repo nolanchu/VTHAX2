@@ -2,9 +2,28 @@
 
 {% block content %}
 <h2>Step 1: Personal Information</h2>
-<form method="post">
+
+<form method="post" class="my-4">
     {% csrf_token %}
-    {{ form }}
-    <button type="submit" class="btn btn-primary">Next</button>
+    
+    <div class="form-group">
+        <!-- Assuming the Age field in your form is named 'age' -->
+        <label for="{{ form.age.id_for_label }}">Your Age:</label>
+        <small class="form-text text-muted">Please enter your age in years.</small>
+        {{ form.age }}
+    </div>
+
+    <hr/>
+
+    <div class="form-group">
+        <!-- Assuming the Sex field in your form is named 'sex' -->
+        <label for="{{ form.sex.id_for_label }}">Your Sex:</label>
+        <small class="form-text text-muted">Please select your biological sex.</small>
+        {{ form.sex }}
+    </div>
+
+    <!-- Continue similarly for other fields -->
+
+    <button type="submit" class="btn btn-primary mt-3">Next</button>
 </form>
 {% endblock %}

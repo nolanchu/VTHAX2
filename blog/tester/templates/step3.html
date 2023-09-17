@@ -2,9 +2,29 @@
 
 {% block content %}
 <h2>Step 4: Biological Information</h2>
-<form method="post">
+<form method="post" class="my-4">
     {% csrf_token %}
-    {{ form }}
+    <div class="form-group">
+        {{ form.height.errors }}
+        <label for="{{ form.height.id_for_label }}">Height:</label>
+        <small class="form-text text-muted">Enter your height in meters.</small>
+        {{ form.height }}
+    </div>
+
+    <div class="form-group">
+        {{ form.weight.errors }}
+        <label for="{{ form.weight.id_for_label }}">Weight:</label>
+        <small class="form-text text-muted">Enter your weight in pounds.</small>
+        {{ form.weight }}
+    </div>
+
+    <div class="form-group">
+        {{ form.sleep.errors }}
+        <label for="{{ form.sleep.id_for_label }}">Sleep Duration:</label>
+        <small class="form-text text-muted">How many hours do you sleep each night?</small>
+        {{ form.sleep }}
+    </div>
+
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 {% endblock %}

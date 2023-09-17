@@ -2,9 +2,22 @@
 
 {% block content %}
 <h2>Step 5: Mental Health Information</h2>
-<form method="post">
+<form method="post" class="my-4">
     {% csrf_token %}
-    {{ form }}
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-group">
+        {{ form.friends.errors }}
+        <label for="{{ form.friends.id_for_label }}">Close Friends:</label>
+        <small class="form-text text-muted">How many close friends do you have?</small>
+        {{ form.friends }}
+    </div>
+
+    <div class="form-group">
+        {{ form.stress.errors }}
+        <label for="{{ form.stress.id_for_label }}">Stress Levels:</label>
+        <small class="form-text text-muted">Would you consider your current stress level to be low, moderate, or high?</small>
+        {{ form.stress }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Next</button>
 </form>
 {% endblock %}

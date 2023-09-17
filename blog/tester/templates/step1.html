@@ -9,35 +9,42 @@
 <img hidden id="burger" data-src="{% static 'tester/burger.png' %}">
 <img hidden id="meat" data-src="{% static 'tester/meat.png' %}">
 <img hidden id="top_bun" data-src="{% static 'tester/top_bun.png' %}">
-<form method="post">
+<form method="post", class="my-4">
     {% csrf_token %}
     {{ form.non_field_errors }} 
-    <canvas id="myCanvas" width="400" height="400"></canvas>
-    <div class="fieldWrapper">
+    <div class="form-group">
         {{ form.smoking.errors }}
-        {{ form.smoking.label_tag }}
+        <label for="{{ form.smoking.id_for_label }}">Cigarettes per Day:</label>
+        <small class="form-text text-muted">How many cigarettes do you smoke daily?</small>
         {{ form.smoking }}
+        <canvas id="myCanvas" width="400" height="400"></canvas>
     </div>
-    <canvas id="burgerCanvas" width="400" height="400"></canvas>
-    <div class="fieldWrapper">
+    
+    <div class="form-group">
         {{ form.diet.errors }}
-        {{ form.diet.label_tag }}
+        <label for="{{ form.diet.id_for_label }}">Fast Food Consumption:</label>
+        <small class="form-text text-muted">How many times do you eat fast food per week?</small>
         {{ form.diet }}
+        <canvas id="burgerCanvas" width="400" height="400"></canvas>
     </div>
-    <div class="fieldWrapper">
-        {{ form.water.errors }}
-        {{ form.water.label_tag }}
+    
+    <div class="form-group">
+        <label>Cups of Water:</label>
+        <small class="form-text text-muted">Drag to indicate how many cups of water you drink daily.</small>
+        <div class="glass">
+            <div class="water"></div>
+        </div>
+        <p align="center" id="cups">Cups: </p>
         {{ form.water.as_hidden }}
     </div>
-    <p align="center" id="cups">Cups: </p>
-    <div class="glass">
-        <div class="water"></div>
-    </div>
-    <div class="fieldWrapper">
+    
+    <div class="form-group">
         {{ form.alcohol.errors }}
-        {{ form.alcohol.label_tag }}
+        <label for="{{ form.alcohol.id_for_label }}">Alcoholic Drinks per Week:</label>
+        <small class="form-text text-muted">How many alcoholic drinks do you consume per week?</small>
         {{ form.alcohol }}
     </div>
+
     <button id="next-button1" type="submit" class="btn btn-primary">Next</button>
 
 </form>

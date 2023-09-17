@@ -2,9 +2,29 @@
 
 {% block content %}
 <h2>Step 3: Physical Activity Information</h2>
-<form method="post">
+<form method="post" class="my-4">
     {% csrf_token %}
-    {{ form }}
+    <div class="form-group">
+        {{ form.exercise.errors }}
+        <label for="{{ form.exercise.id_for_label }}">Exercise Duration (Weekly):</label>
+        <small class="form-text text-muted">How many hours do you exercise per week?</small>
+        {{ form.exercise }}
+    </div>
+
+    <div class="form-group">
+        {{ form.desk.errors }}
+        <label for="{{ form.desk.id_for_label }}">Desk Hours (Daily):</label>
+        <small class="form-text text-muted">How many hours do you spend at your desk daily?</small>
+        {{ form.desk }}
+    </div>
+
+    <div class="form-group">
+        {{ form.transportation.errors }}
+        <label for="{{ form.transportation.id_for_label }}">Daily Commute Method:</label>
+        <small class="form-text text-muted">Do you use human-powered (e.g., walking, cycling) or motorized transportation for your daily commute?</small>
+        {{ form.transportation }}
+    </div>
+
     <button type="submit" class="btn btn-primary">Next</button>
 </form>
 {% endblock %}

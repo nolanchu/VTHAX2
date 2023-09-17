@@ -20,10 +20,10 @@ class PhysicalActivityInfo(models.Model):
     exercise = models.PositiveSmallIntegerField() # hours 
     desk = models.PositiveSmallIntegerField() # hours at
     MY_CHOICES = (
-        ('a', 'Human-powered transport'),
-        ('b', 'Motorized transport'),
+        (1, 'Human-powered transport'),
+        (0, 'Motorized transport'),
     )
-    transportation = models.CharField(max_length=1, choices=MY_CHOICES)
+    transportation = models.PositiveSmallIntegerField(choices=MY_CHOICES)
 
 class BiologicalInfo(models.Model):
     height = models.DecimalField(max_digits=5, decimal_places=2)
