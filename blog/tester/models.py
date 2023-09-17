@@ -2,7 +2,7 @@ from django.db import models
 
 class MyModel(models.Model):
     data = models.JSONField()
-
+from django.core.validators import MaxValueValidator
 class PersonInfo(models.Model):
     AGE_CHOICES = [(i, str(i)) for i in range(1, 121)]
     SEX_CHOICES = [('M', 'Male'), ('F', 'Female')]
@@ -12,8 +12,7 @@ class PersonInfo(models.Model):
 class ConsumptionInfo(models.Model):
     smoking = models.PositiveSmallIntegerField()
     alcohol = models.PositiveSmallIntegerField()
-    DIET_CHOICES = [('V', 'Vegetarian'), ('NV', 'Non-Vegetarian')]
-    diet = models.CharField(max_length=2, choices=DIET_CHOICES)
+    diet = models.PositiveSmallIntegerField(validators=[MaxValueValidator])
     water = models.DecimalField(max_digits=5, decimal_places=2)
 
 class PhysicalActivityInfo(models.Model):
