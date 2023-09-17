@@ -387,7 +387,7 @@ for (var attribute of attributes) {
   const minDiffSource = stepDifferences.indexOf(minDiff);
 var results = `You are expected to live until ${(startingValue15+age).toPrecision(2)} years old.<br>`
   results += `The average person your age and sex is expected to live until ${(startingValue0+age).toPrecision(2)} years.<br>`
-  results += "Most influential behaviors<br>";
+  results += "<u>Most influential behaviors:</u><br>";
   results += `Your ${attributeDescriptions[attributes[maxDiffSource]]} is expected to add ${maxDiff} years to your life.<br>`;
   results += `Your ${attributeDescriptions[attributes[minDiffSource]]} is expected to take away ${minDiff} years from your life.`;
   document.getElementById('min_max').innerHTML = results;
