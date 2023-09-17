@@ -2,10 +2,14 @@
 
 {% block content %}
 <h2>Step 2: Consumption Information</h2>
+{% load static %}
+<img hidden id="smoker" data-src="{% static 'tester/smoker.jpg' %}">
+<img hidden id="cig" data-src="{% static 'tester/cig.png' %}">
+<img hidden id="cig_end" data-src="{% static 'tester/cig_end.png' %}">
 <form method="post">
     {% csrf_token %}
     {{ form.non_field_errors }} 
-    <p align="center" id="cigs">Cigarettes: </p>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
     <div class="fieldWrapper">
         {{ form.smoking.errors }}
         {{ form.smoking.label_tag }}
@@ -51,12 +55,41 @@
     bottom: 0;
     cursor: ns-resize; /* north-south resize cursor */
 }
-
     </style>
     <script type="text/javascript">
     $(document).ready(function() {
-
+        const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
     let cigs = document.getElementById('cigs');
+
+    var img = document.getElementById('smoker');
+    img.src = img.getAttribute('data-src');
+    
+    var img2 = document.getElementById('cig');
+    img2.src = img2.getAttribute('data-src');
+    
+    var img3 = document.getElementById('cig_end');
+    img3.src = img3.getAttribute('data-src');
+    img.onload = function() {
+        ctx.drawImage(img, canvas.width/2-30, canvas.height/2-120, img.width/4, img.height/4); // Draws the image at position (0, 0) on the canvas
+    };
+function reset() {
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+function draw_cig(length=1) {
+    reset();
+    ctx.drawImage(img, canvas.width/2-30, canvas.height/2-120, img.width/4, img.height/4); // Draws the image at position (0, 0) on the canvas
+    if (length >= 1) {
+        ctx.drawImage(img2, 145, 215, img2.width/4, img2.height/4); // Draws the image at position (0, 0) on the canvas
+    }
+    for (var i=1; i<length; ++i) {
+        ctx.drawImage(img3, 195-22*i, 282+10*i, img3.width/4, img3.height/4);
+    }
+}
+// img3.onload = function() {
+    // draw_cig(6);
+// }
 
 
     let isDragging = false;
@@ -96,6 +129,13 @@
     
     next_button.addEventListener('click', function() {
         console.log("hell", getWaterHeight());
+        hiddenInput.value = getWaterHeight().toPrecision(2);
+    });
+
+    const smoking_count = document.getElementById('id_smoking');
+    smoking_count.addEventListener('click', function() {
+        // console.log(smoking_count.value);
+        draw_cig(smoking_count.value || 0);
         hiddenInput.value = getWaterHeight().toPrecision(2);
     });
 
