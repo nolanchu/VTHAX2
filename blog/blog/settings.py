@@ -111,37 +111,37 @@ TIME_ZONE = 'America/New_York'
 USE_I18N = True
 
 USE_TZ = True
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db',
-        'USER': 'db',
-        'PASSWORD': 'AVNS_zBijTIIvYDLputRZTop',
-        'HOST': 'app-68def669-05d0-4d43-a659-4afc55bdf660-do-user-11456994-0.b.db.ondigitalocean.com',
-        'PORT': '25060',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'blog_data',
-#         'USER': 'djangouser',
-#         'PASSWORD': 'monkeymonkeymonkeygoodgood',
-#         'HOST':'localhost',
-#         'PORT':'3306',
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'db',
+#         'USER': 'db',
+#         'PASSWORD': 'AVNS_zBijTIIvYDLputRZTop',
+#         'HOST': 'app-68def669-05d0-4d43-a659-4afc55bdf660-do-user-11456994-0.b.db.ondigitalocean.com',
+#         'PORT': '25060',
+#         'OPTIONS': {
+#             'sslmode': 'require',
+#         },
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'blog_data',
+        'USER': 'djangouser',
+        'PASSWORD': 'monkeymonkeymonkeygoodgood',
+        'HOST':'localhost',
+        'PORT':'3306',
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "tester", "static")]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "tester/static")]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
