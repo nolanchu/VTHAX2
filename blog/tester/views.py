@@ -62,6 +62,8 @@ import json
 
 def home(request):
     return render(request, 'home.html')
+def references(request):
+    return render(request, 'references.html')
 
 def finished(request):
     all_fields = {}
